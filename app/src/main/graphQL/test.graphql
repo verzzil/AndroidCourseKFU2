@@ -1,0 +1,16 @@
+query test($id: Int!) {
+    Media (id: $id, type: ANIME) {
+        id,
+        title {
+            english
+        }
+        description(asHtml: false),
+        episodes,
+        duration,
+        coverImage {
+            extraLarge
+        },
+        bannerImage,
+        siteUrl
+    }
+}

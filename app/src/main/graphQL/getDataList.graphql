@@ -1,0 +1,18 @@
+query getList($type: MediaType!, $countOnPage: Int!, $numberOfPage: Int!) {
+    Page (perPage: $countOnPage, page: $numberOfPage) {
+        media(type: $type) {
+            id,
+            title {
+                romaji
+            },
+            description(asHtml: false),
+            episodes,
+            duration,
+            coverImage {
+                extraLarge
+            },
+            bannerImage,
+            siteUrl
+        }
+    }
+}
