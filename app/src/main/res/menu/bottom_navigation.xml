@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/anime_fragment"
+        android:id="@+id/anotherFragment"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="Аниме" />
+        android:title="Another" />
     <item
-        android:id="@+id/manga_fragment"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="Манга" />
+        android:title="Home" />
+    <item
+        android:id="@+id/baseFragment"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="base" />
 </menu>
