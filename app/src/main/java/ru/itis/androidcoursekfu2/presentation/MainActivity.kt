@@ -1,10 +1,11 @@
 package ru.itis.androidcoursekfu2.presentation
 
+import CurrentMediaQuery
 import GetListQuery
-import TestQuery
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -15,15 +16,28 @@ import com.apollographql.apollo.exception.ApolloException
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import okhttp3.OkHttpClient
 import ru.itis.androidcoursekfu2.R
+import ru.itis.androidcoursekfu2.di.Injector
+import ru.itis.androidcoursekfu2.di.component.ViewModelComponent
 import type.MediaType
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var navController: NavController
+    lateinit var viewModelComponent: ViewModelComponent
+    lateinit var viewModel: MainViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        viewModelComponent = Injector.viewModelComponent()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // ViewModel inject
+        viewModelComponent.inject(this)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         // UI
         val navHostFragment =
@@ -38,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         val apollo = ApolloClient.builder().serverUrl("https://graphql.anilist.co")
             .okHttpClient(okHttpClient).build()
 
-        val testQuery: TestQuery = TestQuery.builder()
+        val testQuery: CurrentMediaQuery = CurrentMediaQuery.builder()
             .id(20)
             .build()
         val dataQuery = GetListQuery.builder()
@@ -48,9 +62,9 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         apollo?.query(testQuery)?.enqueue(
-            object : ApolloCall.Callback<TestQuery.Data>() {
-                override fun onResponse(response: Response<TestQuery.Data>) {
-//                    Log.i("asdfqwerqwer", "${response.data?.Media()} ${response.data?.Media()?.title()?.english()}")
+            object : ApolloCall.Callback<CurrentMediaQuery.Data>() {
+                override fun onResponse(response: Response<CurrentMediaQuery.Data>) {
+                    Log.i("asdfqwerqwer", "${response.data?.Media()} ${response.data?.Media()?.title()?.romaji()}")
                 }
 
                 override fun onFailure(e: ApolloException) {
@@ -69,9 +83,8 @@ class MainActivity : AppCompatActivity() {
                 override fun onResponse(response: Response<GetListQuery.Data>) {
                     Log.i(
                         "asdfqwerqwer",
-                        "${response.data?.Page()}"
+                        "${response.data?.Page()?.media()}"
                     )
-
                 }
             }
         )

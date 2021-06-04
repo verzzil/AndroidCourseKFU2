@@ -1,4 +1,4 @@
-package ru.itis.androidcoursekfu2.presentation.fragment.anime
+package ru.itis.androidcoursekfu2.presentation.fragment.manga
 
 import android.graphics.BitmapFactory
 import androidx.lifecycle.MutableLiveData
@@ -14,22 +14,22 @@ import java.lang.Exception
 import java.net.URL
 import javax.inject.Inject
 
-class AnimeViewModel @Inject constructor(
+class MangaViewModel @Inject constructor(
     private val animeMangaUseCase: AnimeMangaUseCase
 ) : ViewModel() {
 
-    private val animeList: MutableLiveData<List<CardPresentation>> = MutableLiveData()
+    private val mangaList: MutableLiveData<List<CardPresentation>> = MutableLiveData()
     private val errors: MutableLiveData<Exception> = MutableLiveData()
     private val progress: MutableLiveData<Boolean> = MutableLiveData(false)
     private var currentPage = 1
     private var currentList = ArrayList<CardPresentation>()
 
-    fun findAnime() {
+    fun findManga() {
         progress.value = true
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    val resp = animeMangaUseCase.getList(MediaType.ANIME, currentPage++)
+                    val resp = animeMangaUseCase.getList(MediaType.MANGA, currentPage++)
                     try {
                         for(car: CardPresentation in resp) {
                             car.cardImage = BitmapFactory.decodeStream(
@@ -44,7 +44,7 @@ class AnimeViewModel @Inject constructor(
                     currentList =
                         (currentList + (resp as ArrayList<CardPresentation>)) as ArrayList<CardPresentation>
 
-                    animeList.postValue(currentList)
+                    mangaList.postValue(currentList)
                 } catch (e: Exception) {
                     e.printStackTrace()
                     errors.postValue(e)
@@ -55,7 +55,7 @@ class AnimeViewModel @Inject constructor(
         }
     }
 
-    fun getAnimeList(): MutableLiveData<List<CardPresentation>> = animeList
+    fun getAnimeList(): MutableLiveData<List<CardPresentation>> = mangaList
     fun getErrors(): MutableLiveData<Exception> = errors
     fun getProgress(): MutableLiveData<Boolean> = progress
 

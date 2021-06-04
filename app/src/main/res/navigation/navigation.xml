@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/animeFragment">
 
+    <fragment
+        android:id="@+id/animeFragment"
+        android:name="ru.itis.androidcoursekfu2.presentation.fragment.anime.AnimeFragment"
+        android:label="fragment_anime"
+        tools:layout="@layout/fragment_anime_manga" >
+        <action
+            android:id="@+id/action_animeFragment_to_animeMangaDescriptionFragment"
+            app:destination="@id/animeMangaDescriptionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/animeMangaDescriptionFragment"
+        android:name="ru.itis.androidcoursekfu2.presentation.fragment.AnimeMangaDescriptionFragment"
+        android:label="fragment_anime_manga_description"
+        tools:layout="@layout/fragment_anime_manga_description">
+        <argument
+            android:name="postId"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/mangaFragment"
+        android:name="ru.itis.androidcoursekfu2.presentation.fragment.manga.MangaFragment"
+        android:label="MangaFragment" >
+        <action
+            android:id="@+id/action_mangaFragment_to_animeMangaDescriptionFragment"
+            app:destination="@id/animeMangaDescriptionFragment" />
+    </fragment>
 </navigation>

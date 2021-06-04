@@ -1,4 +1,4 @@
-package ru.itis.androidcoursekfu2.presentation.fragment.anime
+package ru.itis.androidcoursekfu2.presentation.fragment
 
 import android.graphics.BitmapFactory
 import androidx.lifecycle.MutableLiveData
@@ -9,42 +9,33 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.itis.androidcoursekfu2.domain.AnimeMangaUseCase
 import ru.itis.androidcoursekfu2.presentation.models.CardPresentation
-import type.MediaType
 import java.lang.Exception
 import java.net.URL
 import javax.inject.Inject
 
-class AnimeViewModel @Inject constructor(
+class AnimeMangaDescriptionViewModel @Inject constructor(
     private val animeMangaUseCase: AnimeMangaUseCase
 ) : ViewModel() {
 
-    private val animeList: MutableLiveData<List<CardPresentation>> = MutableLiveData()
+    private val currentPost: MutableLiveData<CardPresentation> = MutableLiveData()
     private val errors: MutableLiveData<Exception> = MutableLiveData()
-    private val progress: MutableLiveData<Boolean> = MutableLiveData(false)
-    private var currentPage = 1
-    private var currentList = ArrayList<CardPresentation>()
+    private val progress: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun findAnime() {
+    fun findPost(id: Int) {
         progress.value = true
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    val resp = animeMangaUseCase.getList(MediaType.ANIME, currentPage++)
+                    val resp = animeMangaUseCase.getPost(id)
                     try {
-                        for(car: CardPresentation in resp) {
-                            car.cardImage = BitmapFactory.decodeStream(
-                                URL(car.cardImageLink).openConnection()
-                                    .getInputStream())
-                        }
+                        resp.fullImage = BitmapFactory.decodeStream(
+                            URL(resp.fullImageLink).openConnection()
+                                .getInputStream())
                     } catch (e: Exception) {
                         e.printStackTrace()
                         errors.postValue(e)
                     }
-
-                    currentList =
-                        (currentList + (resp as ArrayList<CardPresentation>)) as ArrayList<CardPresentation>
-
-                    animeList.postValue(currentList)
+                    currentPost.postValue(resp)
                 } catch (e: Exception) {
                     e.printStackTrace()
                     errors.postValue(e)
@@ -55,8 +46,9 @@ class AnimeViewModel @Inject constructor(
         }
     }
 
-    fun getAnimeList(): MutableLiveData<List<CardPresentation>> = animeList
+    fun getCurrentPost(): MutableLiveData<CardPresentation> = currentPost
     fun getErrors(): MutableLiveData<Exception> = errors
     fun getProgress(): MutableLiveData<Boolean> = progress
+
 
 }
