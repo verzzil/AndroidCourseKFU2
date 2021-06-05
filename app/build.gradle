@@ -76,5 +76,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
+    implementation 'ru.terrakok.cicerone:cicerone:5.0.0'
+
+    implementation 'android.arch.navigation:navigation-fragment:2.3.5'
+    implementation 'android.arch.navigation:navigation-ui:2.3.5'
 
 }
