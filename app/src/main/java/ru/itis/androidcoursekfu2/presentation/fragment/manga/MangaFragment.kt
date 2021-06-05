@@ -15,7 +15,6 @@ import ru.itis.androidcoursekfu2.R
 import ru.itis.androidcoursekfu2.di.component.ViewModelComponent
 import ru.itis.androidcoursekfu2.presentation.MainActivity
 import ru.itis.androidcoursekfu2.presentation.adapter.AnimeMangaAdapter
-import ru.itis.androidcoursekfu2.presentation.fragment.anime.AnimeFragmentDirections
 
 class MangaFragment : Fragment() {
 
@@ -50,7 +49,7 @@ class MangaFragment : Fragment() {
     }
 
     private fun initObservers() {
-        viewModel.getAnimeList().observe(viewLifecycleOwner, {
+        viewModel.getMangaList().observe(viewLifecycleOwner, {
             mangaAdapter.submitList(it)
             isLoading = false
         })
@@ -73,7 +72,7 @@ class MangaFragment : Fragment() {
     }
 
     private fun initQueries() {
-        if (viewModel.getAnimeList().value?.size == null)
+        if (viewModel.getMangaList().value?.size == null)
             viewModel.findManga()
     }
 

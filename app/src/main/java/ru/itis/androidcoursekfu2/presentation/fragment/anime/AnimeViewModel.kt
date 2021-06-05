@@ -18,9 +18,9 @@ class AnimeViewModel @Inject constructor(
     private val animeMangaUseCase: AnimeMangaUseCase
 ) : ViewModel() {
 
-    private val animeList: MutableLiveData<List<CardPresentation>> = MutableLiveData()
+    private var animeList: MutableLiveData<List<CardPresentation>> = MutableLiveData()
     private val errors: MutableLiveData<Exception> = MutableLiveData()
-    private val progress: MutableLiveData<Boolean> = MutableLiveData(false)
+    private var progress: MutableLiveData<Boolean> = MutableLiveData(false)
     private var currentPage = 1
     private var currentList = ArrayList<CardPresentation>()
 
@@ -59,4 +59,11 @@ class AnimeViewModel @Inject constructor(
     fun getErrors(): MutableLiveData<Exception> = errors
     fun getProgress(): MutableLiveData<Boolean> = progress
 
+    //for testing
+    fun setAnimeList(list: MutableLiveData<List<CardPresentation>>) {
+        animeList = list
+    }
+    fun setProgress(progress: MutableLiveData<Boolean>) {
+        this.progress = progress
+    }
 }

@@ -5,18 +5,12 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import ru.itis.androidcoursekfu2.di.ViewModelKey
-import ru.itis.androidcoursekfu2.presentation.MainViewModel
 import ru.itis.androidcoursekfu2.presentation.fragment.AnimeMangaDescriptionViewModel
 import ru.itis.androidcoursekfu2.presentation.fragment.anime.AnimeViewModel
 import ru.itis.androidcoursekfu2.presentation.fragment.manga.MangaViewModel
 
 @Module
 interface ViewModelModule {
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(MainViewModel::class)
-    fun bindMainViewModel(viewModel: MainViewModel): ViewModel
 
     @Binds
     @IntoMap

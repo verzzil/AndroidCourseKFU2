@@ -17,9 +17,9 @@ class AnimeMangaDescriptionViewModel @Inject constructor(
     private val animeMangaUseCase: AnimeMangaUseCase
 ) : ViewModel() {
 
-    private val currentPost: MutableLiveData<CardPresentation> = MutableLiveData()
+    private var currentPost: MutableLiveData<CardPresentation> = MutableLiveData()
     private val errors: MutableLiveData<Exception> = MutableLiveData()
-    private val progress: MutableLiveData<Boolean> = MutableLiveData()
+    private var progress: MutableLiveData<Boolean> = MutableLiveData()
 
     fun findPost(id: Int) {
         progress.value = true
@@ -50,5 +50,12 @@ class AnimeMangaDescriptionViewModel @Inject constructor(
     fun getErrors(): MutableLiveData<Exception> = errors
     fun getProgress(): MutableLiveData<Boolean> = progress
 
+    // for testing
+    fun setCurrentPost(post: MutableLiveData<CardPresentation>) {
+        currentPost = post
+    }
+    fun setProgress(progress: MutableLiveData<Boolean> ) {
+        this.progress = progress
+    }
 
 }
