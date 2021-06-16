@@ -1,6 +1,7 @@
 package ru.itis.androidcoursekfu2.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModelComponent = Injector.viewModelComponent()
+        viewModelComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

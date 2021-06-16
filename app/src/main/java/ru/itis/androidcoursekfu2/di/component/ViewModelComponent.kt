@@ -10,8 +10,8 @@ import ru.itis.androidcoursekfu2.presentation.fragment.anime.AnimeFragment
 import ru.itis.androidcoursekfu2.presentation.fragment.manga.MangaFragment
 
 @Subcomponent(modules = [
-    ViewModelModule::class,
     ViewModelFactoryModule::class,
+    ViewModelModule::class,
 ])
 @ActivityScope
 interface ViewModelComponent {
