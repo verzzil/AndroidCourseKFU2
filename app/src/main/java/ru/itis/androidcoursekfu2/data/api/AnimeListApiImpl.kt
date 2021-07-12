@@ -4,6 +4,8 @@ import CurrentMediaQuery
 import GetListQuery
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.coroutines.toDeferred
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import ru.itis.androidcoursekfu2.utils.Consts
 import type.MediaType
 import javax.inject.Inject
@@ -11,7 +13,8 @@ import javax.inject.Inject
 class AnimeListApiImpl(
     private val aniListApi: ApolloClient
 ) : AnimeListApi {
-    override suspend fun getList(type: MediaType, pageNumber: Int): List<GetListQuery.Medium>? {
+
+    override suspend fun getList(type: MediaType, pageNumber: Int): Flow<GetListQuery.Medium> {
         val query = GetListQuery.builder()
             .type(type)
             .countOnPage(Consts.COUNT_ON_PAGE)
@@ -19,7 +22,11 @@ class AnimeListApiImpl(
             .build()
         val deferred = aniListApi.query(query).toDeferred()
         val response = deferred.await()
-        return response.data?.Page()?.media()
+        return flow {
+            response.data?.Page()?.media()?.map {
+                emit(it)
+            }
+        }
     }
 
     override suspend fun getPost(id: Int): CurrentMediaQuery.Media? {
