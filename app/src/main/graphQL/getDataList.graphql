@@ -1,13 +1,36 @@
+query currentMedia($id: Int!) {
+    Media (id: $id) {
+        id,
+        type,
+        title {
+            romaji
+        }
+        description(asHtml: false),
+        episodes,
+        duration,
+        chapters,
+        volumes,
+        coverImage {
+            extraLarge
+        },
+        bannerImage,
+        siteUrl
+    }
+}
+
 query getList($type: MediaType!, $countOnPage: Int!, $numberOfPage: Int!) {
     Page (perPage: $countOnPage, page: $numberOfPage) {
-        media(type: $type) {
+        media (type: $type) {
             id,
+            type,
             title {
                 romaji
             },
             description(asHtml: false),
             episodes,
             duration,
+            chapters,
+            volumes,
             coverImage {
                 extraLarge
             },

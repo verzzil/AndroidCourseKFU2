@@ -6,6 +6,8 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.itis.androidcoursekfu2.data.api.AnimeListApi
+import ru.itis.androidcoursekfu2.data.api.AnimeListApiImpl
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -27,4 +29,11 @@ class NetModule {
             .okHttpClient(client)
             .serverUrl("https://graphql.anilist.co")
             .build()
+
+    @Provides
+    @Singleton
+    fun provideAniListApi(
+        client: ApolloClient
+    ): AnimeListApi =
+        AnimeListApiImpl(client)
 }
