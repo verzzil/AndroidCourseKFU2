@@ -2,36 +2,42 @@
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple_200"
     app:layoutDescription="@xml/activity_motion_toolbar_scene"
-    app:motionDebug="SHOW_PATH"
     tools:context=".presentation.MotionToolbarActivity">
 
-    <View
-        android:id="@+id/test_top_image"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/white" />
-
-    <TextView
-        android:id="@+id/test_title"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Collapsing"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/test_top_image" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/test_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    <ru.itis.androidcoursekfu2.presentation.views.CircleCardView
+        android:id="@+id/card_view"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:cardCornerRadius="24dp"
+        android:background="@color/white" />
+
+    <ImageView
+        android:id="@+id/img_view"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:elevation="2dp"
+        android:src="@drawable/ic_android_black_24dp" />
+
+    <ImageView
+        android:id="@+id/img_view2"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:elevation="2dp"
+        android:src="@drawable/ic_baseline_accessibility_new_24"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/test_top_image" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

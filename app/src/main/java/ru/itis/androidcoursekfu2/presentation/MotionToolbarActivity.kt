@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -15,30 +16,19 @@ import ru.itis.androidcoursekfu2.presentation.models.TestModel
 
 class MotionToolbarActivity : AppCompatActivity() {
 
-    private lateinit var testAdapter: AdapterForTest
-    private lateinit var rv: RecyclerView
-    private lateinit var image: View
-    private lateinit var text: TextView
+    private lateinit var motion: MotionLayout
+    private lateinit var img: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_motion_toolbar)
 
-        rv = findViewById(R.id.test_recycler)
-        image = findViewById(R.id.test_top_image)
-        text = findViewById(R.id.test_title)
+        motion = findViewById(R.id.motion)
+        img = findViewById(R.id.img_view)
 
-        testAdapter = AdapterForTest(TestModel.getBigData()) {
-            it.itemView.findViewById<MotionLayout>(R.id.item_test_root).apply {
-                layoutParams = layoutParams.apply {
-                    width = ConstraintLayout.LayoutParams.MATCH_PARENT
-                    height = ConstraintLayout.LayoutParams.MATCH_PARENT
-                }
-            }
+        img.setOnClickListener {
+            motion.transitionToState(R.id.second_set)
         }
-
-        rv.adapter = testAdapter
-
 
     }
 
