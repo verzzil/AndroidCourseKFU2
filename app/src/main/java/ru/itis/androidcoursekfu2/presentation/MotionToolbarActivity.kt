@@ -2,19 +2,13 @@ package ru.itis.androidcoursekfu2.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.*
 import ru.itis.androidcoursekfu2.R
-import ru.itis.androidcoursekfu2.presentation.adapter.AdapterForTest
-import ru.itis.androidcoursekfu2.presentation.models.TestModel
+import ru.itis.androidcoursekfu2.utils.awaitTransitionComplete
 
-class MotionToolbarActivity : AppCompatActivity() {
+class MotionToolbarActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
     private lateinit var motion: MotionLayout
     private lateinit var img: ImageView
@@ -27,7 +21,20 @@ class MotionToolbarActivity : AppCompatActivity() {
         img = findViewById(R.id.img_view)
 
         img.setOnClickListener {
-            motion.transitionToState(R.id.second_set)
+            launch {
+                motion.setTransition(R.id.first_set, R.id.second_set)
+                motion.transitionToEnd()
+                motion.awaitTransitionComplete(R.id.second_set)
+
+                motion.setTransition(R.id.second_set, R.id.third_set)
+                motion.transitionToEnd()
+                motion.awaitTransitionComplete(R.id.third_set)
+
+                motion.setTransition(R.id.third_set, R.id.fourth_set)
+                motion.transitionToEnd()
+            }
+
+
         }
 
     }

@@ -99,11 +99,9 @@ class AnimeFragment : Fragment() {
                 val totalItemCount: Int = rvManager.itemCount
                 val lastVisibleItemPosition: Int = rvManager.findLastVisibleItemPosition()
 
-                if (!isLoading) {
-                    if (totalItemCount - 1 == lastVisibleItemPosition) {
-                        isLoading = true
-                        viewModel.findAnime()
-                    }
+                if (!isLoading && totalItemCount - 1 == lastVisibleItemPosition) {
+                    isLoading = true
+                    viewModel.findAnime()
                 }
             }
         })
