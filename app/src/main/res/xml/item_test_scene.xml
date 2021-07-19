@@ -5,10 +5,7 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@+id/start">
-        <OnClick
-            motion:targetId="@id/item_test_root"
-            motion:clickAction="toggle"
-            />
+
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
